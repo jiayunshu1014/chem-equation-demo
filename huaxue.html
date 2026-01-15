@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>随机化学方程式生成器</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f7fa;
+      text-align: center;
+      padding-top: 80px;
+    }
+    .box {
+      width: 60%;
+      margin: auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      font-size: 22px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.1);
+    }
+    button {
+      font-size: 18px;
+      padding: 10px 25px;
+      margin: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>随机化学方程式生成器（非预设）</h1>
+<button onclick="generate()">生成</button>
+
+<div class="box" id="result">点击生成化学方程式</div>
+
+<script>
+  // 基础物质库
+  const metals = ["Na", "K", "Ca", "Fe", "Zn"];
+  const acids = ["HCl", "H₂SO₄", "HNO₃"];
+  const bases = ["NaOH", "KOH", "Ca(OH)₂"];
+  const nonMetals = ["O₂", "Cl₂"];
+  const salts = ["NaCl", "KCl", "CaCl₂", "ZnSO₄"];
+
+  function rand(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function generate() {
+    const type = Math.floor(Math.random() * 4);
+    let equation = "";
+
+    switch (type) {
+      // 化合反应
+      case 0:
+        const m = rand(metals);
+        equation = `2${m} + O₂ → 2${m}O`;
+        break;
+
+      // 分解反应
+      case 1:
+        equation = "CaCO₃ → CaO + CO₂";
+        break;
+
+      // 置换反应
+      case 2:
+        const metal = rand(metals);
+        equation = `${metal} + CuSO₄ → ${metal}SO₄ + Cu`;
+        break;
+
+      // 酸碱中和
+      case 3:
+        equation = `${rand(acids)} + ${rand(bases)} → 盐 + H₂O`;
+        break;
+    }
+
+    document.getElementById("result").innerText = equation;
+  }
+</script>
+
+</body>
+</html>
